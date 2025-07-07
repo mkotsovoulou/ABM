@@ -77,7 +77,7 @@ public class HelloController {
 
             // FIX: Changed getProcedureName() to getProcedure()
             try (Connection conn = DriverManager.getConnection(url, username, password);
-                 CallableStatement cstmt = conn.prepareCall("{call " + selectedReport.getProcedure() + "(?, ?}")) {
+                 CallableStatement cstmt = conn.prepareCall("{call " + selectedReport.getProcedure() + "(?, ?)}")) {
 
                 cstmt.setInt(1, year);
                 cstmt.setInt(2, month);
