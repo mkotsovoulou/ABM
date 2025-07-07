@@ -84,13 +84,19 @@ public class HelloController {
 
     /**
      * Executes the selected stored procedure on a background thread.
+     * 
+     * Note: For Windows integrated authentication to work, you need to:
+     * 1. Download the appropriate sqljdbc_auth.dll file from Microsoft
+     * 2. Place it in a directory that's in your Java library path (e.g., JRE/bin directory)
+     * 3. Or specify the directory using -Djava.library.path=<path_to_dll_directory> when running the application
      *
      * @param selectedReport The report type containing database and procedure details.
      * @param year           The year parameter for the stored procedure.
      * @param month          The month parameter for the stored procedure.
      */
     private void executeProcedure(ReportType selectedReport, int year, int month) {
-        String url = "jdbc:sqlserver://" + selectedReport.getServer() + ";databaseName=" + selectedReport.getDatabase() + ";integratedSecurity=true;trustServerCertificate=true";
+        // Using the newer authentication syntax for SQL Server JDBC driver
+        String url = "jdbc:sqlserver://" + selectedReport.getServer() + ";databaseName=" + selectedReport.getDatabase() + ";authentication=ActiveDirectoryIntegrated;trustServerCertificate=true";
 
         try (Connection connection = DriverManager.getConnection(url);
              CallableStatement callableStatement = connection.prepareCall("{call " + selectedReport.getProcedure() + "(?, ?)}")) {
