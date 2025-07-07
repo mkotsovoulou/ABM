@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.eydap.abm.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <GridPane alignment="CENTER" hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="60"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="200"/>
+        </columnConstraints>
+
+        <Label text="Report Type:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <ComboBox fx:id="reportTypeCombo" maxWidth="Infinity" visibleRowCount="5" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="Year:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="yearField" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        
+        <Label text="Month:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="monthField" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        
+        <Button text="Run Procedure" onAction="#onRunProcedureClick" 
+                GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3"
+                GridPane.halignment="CENTER"/>
+    </GridPane>
+
+    <TextArea fx:id="messageArea" 
+              editable="false" 
+              wrapText="true" 
+              prefRowCount="6" 
+              prefColumnCount="40"
+              VBox.vgrow="ALWAYS"/>
+</VBox>
