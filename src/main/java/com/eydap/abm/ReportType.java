@@ -6,10 +6,16 @@ package com.eydap.abm;
  * and the specific stored procedure to be called.
  */
 public enum ReportType {
+    /**
+     * Report for Master Data
+     */
+
+    MASTER_DATA("Master Data Refresh", "2022SRV", "dss_dev", "update_master_data"),
 
     /**
      * Report for Analytical Data (Fact Stats).
      */
+
     FACT_STATS("Αναλυτικά Δεδομένα (Fact Stats)", "2022SRV", "dss_dev", "ABM_Process_factstats"),
 
     /**
