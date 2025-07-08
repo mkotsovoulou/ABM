@@ -82,7 +82,7 @@ public class HelloController {
                     try (Statement stmt = conn.createStatement();
                          ResultSet rs1 = stmt.executeQuery("SELECT max(month_code) FROM fact_stats")) {
                         if (rs1.next()) {
-                            result.append("Τελευταίος μηνας που εχει φορτωθεί στο fact_stats: ").append(rs1.getInt(1)).append("\n");
+                            result.append("Τελευταίος μηνας που εχει φορτωθεί στο fact_stats: ").append(rs1.getString(1)).append("\n");
                         }
                     }
 
@@ -90,7 +90,7 @@ public class HelloController {
                     try (Statement stmt = conn.createStatement();
                          ResultSet rs2 = stmt.executeQuery("SELECT max(month_code) FROM fact_stats2")) {
                         if (rs2.next()) {
-                            result.append("Τελευταίος μηνας που εχει φορτωθεί στο fact_stats2: ").append(rs2.getDate(1)).append("\n");
+                            result.append("Τελευταίος μηνας που εχει φορτωθεί στο fact_stats2: ").append(rs2.getString(1)).append("\n");
                         }
                     }
 
