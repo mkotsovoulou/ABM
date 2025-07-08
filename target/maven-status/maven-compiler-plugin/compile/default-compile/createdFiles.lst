@@ -3,4 +3,5 @@ com\eydap\abm\ReportType.class
 com\eydap\abm\HelloController$1.class
 module-info.class
 com\eydap\abm\Runner.class
+com\eydap\abm\HelloController$2.class
 com\eydap\abm\HelloController.class

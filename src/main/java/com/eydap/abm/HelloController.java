@@ -28,6 +28,7 @@ public class HelloController {
         reportTypeCombo.getItems().setAll(ReportType.values());
         yearField.setPromptText("e.g., " + YearMonth.now().getYear());
         monthField.setPromptText("e.g., " + YearMonth.now().getMonthValue());
+        executeSelectStatements("sa", "Sap12345@");
     }
 
     @FXML
@@ -62,7 +63,63 @@ public class HelloController {
             messageArea.setText("Invalid year or month. Please enter numbers.");
         }
     }
-    
+
+    private void executeSelectStatements(String username, String password) {
+        progressIndicator.setVisible(true);
+        messageArea.setText("Ανάκτηση τελευταίου φορτωμένου έτους/μήνα στα ABM...");
+
+        Task<String> task = new Task<>() {
+            @Override
+            protected String call() throws Exception {
+                String url = "jdbc:sqlserver://" + "2022SRV"  +
+                        ";databaseName=" +  "dss_dev" +
+                        ";encrypt=true;trustServerCertificate=true;";
+
+                StringBuilder result = new StringBuilder();
+
+                try (Connection conn = DriverManager.getConnection(url, username, password)) {
+                    // SELECT 1
+                    try (Statement stmt = conn.createStatement();
+                         ResultSet rs1 = stmt.executeQuery("SELECT max(month_code) FROM fact_stats")) {
+                        if (rs1.next()) {
+                            result.append("Τελευταίος μηνας που εχει φορτωθεί στο fact_stats: ").append(rs1.getInt(1)).append("\n");
+                        }
+                    }
+
+                    // SELECT 2
+                    try (Statement stmt = conn.createStatement();
+                         ResultSet rs2 = stmt.executeQuery("SELECT max(month_code) FROM fact_stats2")) {
+                        if (rs2.next()) {
+                            result.append("Τελευταίος μηνας που εχει φορτωθεί στο fact_stats2: ").append(rs2.getDate(1)).append("\n");
+                        }
+                    }
+
+                    // SELECT 3
+                    try (Statement stmt = conn.createStatement();
+                         ResultSet rs3 = stmt.executeQuery("SELECT max(month_code) FROM fact_stats3")) {
+                        if (rs3.next()) {
+                            result.append("Τελευταίος μηνας που εχει φορτωθεί στο water report: ").append(rs3.getString(1)).append("\n");
+                        }
+                    }
+
+                    return result.toString();
+                }
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            progressIndicator.setVisible(false);
+            messageArea.setText(task.getValue());
+        });
+
+        task.setOnFailed(e -> {
+            progressIndicator.setVisible(false);
+            messageArea.setText("Error: " + task.getException().getMessage());
+        });
+
+        new Thread(task).start();
+    }
+
     private void executeProcedure(ReportType selectedReport, int year, int month, String username, String password) {
         progressIndicator.setVisible(true);
         // FIX: Changed getProcedureName() to getProcedure()
