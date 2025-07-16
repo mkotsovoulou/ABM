@@ -11,7 +11,6 @@ public enum ReportType {
      */
 
     MASTER_DATA("Master Data Refresh", "2022SRV", "dss_dev", "update_master_data"),
-
     /**
      * Report for Analytical Data (Fact Stats).
      */
