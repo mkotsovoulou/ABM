@@ -15,9 +15,9 @@ import java.util.Optional;
 public class Runner {
     public static void main(String[] args) throws IOException {
         String version = ABMApplication.class.getPackage().getImplementationVersion();
-        String latestVersion = getLatestVersion();
+      //  String latestVersion = getLatestVersion();
         System.out.println("ABM Running version: " + version);
-        System.out.println("ABM GitHub version: " + latestVersion);
+  //      System.out.println("ABM GitHub version: " + latestVersion);
 //        if (!version.equals(latestVersion)) {
 //            // (A) For console app, use prompt below:
 //            // System.out.println("New version available! Update? (y/n)");
