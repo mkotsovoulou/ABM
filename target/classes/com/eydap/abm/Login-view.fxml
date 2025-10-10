@@ -22,7 +22,7 @@
         </columnConstraints>
 
         <Label text="Server:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <TextField fx:id="serverField" GridPane.columnIndex="1" GridPane.rowIndex="0" text="2019SRV\\MSSQLSERVER2019" />
+        <TextField fx:id="serverField" GridPane.columnIndex="1" GridPane.rowIndex="0" text="2019SRV\MSSQLSERVER2019" />
         
         <Label text="Database:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <TextField fx:id="databaseField" GridPane.columnIndex="1" GridPane.rowIndex="1" text="EYDAP"/>

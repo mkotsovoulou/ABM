@@ -28,22 +28,12 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField passwordField;
     @FXML
-    private Label versionLabel; // The new label from the FXML
+    private Label versionLabel;
 
-    /**
-     * This method is called by the FXMLLoader when initialization is complete.
-     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Get the version from the JAR's manifest file
         String version = getClass().getPackage().getImplementationVersion();
-
-        // If running from IDE, version will be null. Show a placeholder.
-        if (version == null) {
-            versionLabel.setText("Version: DEV");
-        } else {
-            versionLabel.setText("Version: " + version);
-        }
+        versionLabel.setText("Version: " + (version == null ? "DEV" : version));
     }
 
     @FXML
@@ -53,14 +43,21 @@ public class LoginController implements Initializable {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        try {
-            Connection connection = DatabaseConnector.getConnection(server, database, username, password);
-            System.out.println("Login Successful!");
-            connection.close();
+        // 1. Test the connection details using try-with-resources
+        try (Connection connection = DatabaseConnector.getConnection(server, database, username, password)) {
+            System.out.println("Login Successful! Credentials are valid.");
 
+            // 2. Load the FXML for the next screen
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ABM-view.fxml"));
             Parent root = loader.load();
 
+            // 3. Get the controller of the new screen
+            ABMController abmController = loader.getController();
+
+            // 4. Pass the connection details to the ABMController
+            abmController.setConnectionDetails(server, database, username, password);
+
+            // 5. Show the new scene
             Stage stage = (Stage) serverField.getScene().getWindow();
             stage.setTitle("ABM Application");
             stage.setScene(new Scene(root));
