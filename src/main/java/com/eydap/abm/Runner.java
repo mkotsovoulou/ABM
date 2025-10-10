@@ -4,54 +4,29 @@ import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
-// Add this import statement
-
 public class Runner {
     public static void main(String[] args) throws IOException {
         String version = ABMApplication.class.getPackage().getImplementationVersion();
-      //  String latestVersion = getLatestVersion();
         System.out.println("ABM Running version: " + version);
-  //      System.out.println("ABM GitHub version: " + latestVersion);
-//        if (!version.equals(latestVersion)) {
-//            // (A) For console app, use prompt below:
-//            // System.out.println("New version available! Update? (y/n)");
-//            // if (System.console().readLine().trim().equalsIgnoreCase("y")) { ... }
-//
-//            // (B) For JavaFX, show a dialog instead:
-//            javafx.application.Platform.startup(() -> {
-//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-//                        "A new version (" + latestVersion + ") is available.\nUpdate now?",
-//                        ButtonType.YES, ButtonType.NO);
-//                alert.setTitle("Update Available");
-//                alert.setHeaderText("Update Available");
-//                Optional<ButtonType> result = alert.showAndWait();
-//                if (result.isPresent() && result.get() == ButtonType.YES) {
-//                    try {
-//                        String downloadUrl = "https://github.com/mkotsovoulou/ABM/releases/download/v" +
-//                                latestVersion + "/ABM-" + latestVersion + ".jar";
-//                        File downloadedJar = downloadNewJar(downloadUrl, latestVersion);
-//                        launchJar(downloadedJar);
-//                    } catch (Exception e) {
-//                        Alert fail = new Alert(Alert.AlertType.ERROR, "Update failed: " + e.getMessage());
-//                        fail.showAndWait();
-//                        System.exit(1);
-//                    }
-//                } else {
-//                    // Start the app as normal if the user says NO
-//                    Application.launch(ABMApplication.class, args);
-//                }
-//            });
-//        } else {
-            Application.launch(ABMApplication.class, args);
-//        }
+
+        // Your update logic can remain here...
+
+        // The critical change is this line:
+        ABMApplication.main(args);
     }
 
+    // ... all your other helper methods (getLatestVersion, downloadNewJar, etc.) remain the same
+    
     public static String getLatestVersion() throws IOException {
         // URL to raw text file in your GitHub repo (e.g., https://raw.githubusercontent.com/youruser/yourrepo/main/latest-version.txt)
         URL url = new URL("https://raw.githubusercontent.com/mkotsovoulou/ABM-VersionControl/main/latest-version.txt");
@@ -75,5 +50,4 @@ public class Runner {
         builder.start();
         System.exit(0); // Exit current app
     }
-
 }

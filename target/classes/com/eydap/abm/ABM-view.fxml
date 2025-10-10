@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="TOP_CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.eydap.abm.ABMController">
+<VBox alignment="TOP_CENTER" prefHeight="482.0" prefWidth="317.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.eydap.abm.ABMController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -19,30 +19,22 @@
         <ComboBox fx:id="reportTypeCombo" maxWidth="Infinity" visibleRowCount="5" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
         <Label text="Year:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <TextField fx:id="yearField" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <TextField fx:id="yearField" maxWidth="100" prefWidth="51.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
         <Label text="Month:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
         <TextField fx:id="monthField" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-        <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-        <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
-        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-        <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-
-        <Button onAction="#onRunProcedureClick" text="Run Procedure" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-      <rowConstraints>
-         <RowConstraints />
-         <RowConstraints />
-         <RowConstraints />
-         <RowConstraints />
-         <RowConstraints />
-         <RowConstraints />
-      </rowConstraints>
+        <Button onAction="#onRunProcedureClick" text="Run Procedure" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+        <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+        </rowConstraints>
     </GridPane>
 
-    <TextArea fx:id="messageArea" editable="false" prefColumnCount="40" prefHeight="117.0" prefRowCount="6" prefWidth="106.0" wrapText="true" VBox.vgrow="ALWAYS" />
-   <Button onAction="#onRunRefreshClick" text="Refresh Counts" />
+    <TextArea fx:id="messageArea" editable="false" prefColumnCount="40" prefHeight="260.0" prefRowCount="6" prefWidth="277.0" wrapText="true" VBox.vgrow="ALWAYS" />
+    <Button onAction="#onRunRefreshClick" text="Refresh Counts" />
 
     <ProgressIndicator fx:id="progressIndicator" visible="false" />
 
