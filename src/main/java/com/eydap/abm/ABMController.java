@@ -62,13 +62,11 @@ public class ABMController {
             return;
         }
 
-        // The Task now returns a String (the message from the procedure)
         Task<String> runProcedureTask = new Task<>() {
             @Override
             protected String call() throws Exception {
                 updateMessage("Starting procedure...");
                 String procedureName = selectedReport.getProcedure();
-                // Add a '?' for the output parameter
                 String sql = "{call " + procedureName + "(?, ?, ?)}";
                 String resultMessage;
 
@@ -76,30 +74,20 @@ public class ABMController {
                      CallableStatement stmt = conn.prepareCall(sql)) {
 
                     updateMessage("Executing: " + procedureName + " for Year: " + year + ", Month: " + month);
-
-                    // 1. Set IN parameters
                     stmt.setInt(1, year);
                     stmt.setInt(2, month);
-
-                    // 2. Register OUT parameter (assuming it's the 3rd one and returns a string)
                     stmt.registerOutParameter(3, Types.NVARCHAR);
-
-                    // 3. Execute the procedure
                     stmt.execute();
-
-                    // 4. Retrieve the OUT parameter value
                     resultMessage = stmt.getString(3);
 
-                    // Provide a default message if the procedure returns null or an empty string
                     if (resultMessage == null || resultMessage.isBlank()) {
                         resultMessage = "Procedure '" + procedureName + "' completed successfully with no return message.";
                     }
-
                 } catch (SQLException e) {
                     updateMessage("Database Error:\n" + e.getMessage());
-                    throw e; // Cause the task to fail
+                    throw e;
                 }
-                return resultMessage; // Return the final message from the procedure
+                return resultMessage;
             }
         };
 
@@ -107,16 +95,25 @@ public class ABMController {
         runButton.disableProperty().bind(runProcedureTask.runningProperty());
         messageArea.textProperty().bind(runProcedureTask.messageProperty());
 
-        // When the task succeeds, unbind the message property and set the final result.
         runProcedureTask.setOnSucceeded(event -> {
             messageArea.textProperty().unbind();
-            messageArea.setText(runProcedureTask.getValue()); // getValue() retrieves the returned string
+            messageArea.setText(runProcedureTask.getValue());
         });
 
         runProcedureTask.setOnFailed(event -> {
-            messageArea.textProperty().unbind(); // Unbind to show the final error message
+            messageArea.textProperty().unbind();
         });
 
         new Thread(runProcedureTask).start();
+    }
+
+    /**
+     * This method is called when the "Refresh Counts" button is clicked.
+     * It was missing, causing the application to crash.
+     */
+    @FXML
+    private void onRunRefreshClick() {
+        // TODO: Implement the logic for refreshing counts.
+        messageArea.setText("Refresh counts functionality is not yet implemented.");
     }
 }

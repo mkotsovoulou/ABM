@@ -37,17 +37,19 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void onLoginClick() throws IOException {
+    private void onLoginClick() {
         String server = serverField.getText();
         String database = databaseField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        // 1. Test the connection details using try-with-resources
-        try (Connection connection = DatabaseConnector.getConnection(server, database, username, password)) {
-            System.out.println("Login Successful! Credentials are valid.");
+        try {
+            // 1. First, test the database connection and close it immediately.
+            try (Connection connection = DatabaseConnector.getConnection(server, database, username, password)) {
+                System.out.println("Login Successful! Credentials are valid.");
+            }
 
-            // 2. Load the FXML for the next screen
+            // 2. If the connection was successful, proceed to load the next scene.
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ABM-view.fxml"));
             Parent root = loader.load();
 
@@ -64,11 +66,21 @@ public class LoginController implements Initializable {
             stage.show();
 
         } catch (SQLException e) {
+            // This 'catch' is specifically for database connection errors.
             System.err.println("Login Failed: " + e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login Failed");
             alert.setHeaderText("Could not connect to the database.");
-            alert.setContentText("Please check your server, database, username, and password.");
+            alert.setContentText("Please check your credentials and network connection.\n\nDetails: " + e.getMessage());
+            alert.showAndWait();
+        } catch (IOException e) {
+            // This 'catch' is for FXML loading and other UI errors.
+            System.err.println("Failed to load application view: " + e.getMessage());
+            e.printStackTrace(); // Very useful for debugging in the console
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Application Error");
+            alert.setHeaderText("Failed to load the main application screen.");
+            alert.setContentText("This is usually caused by an error in the FXML file.\n\nDetails: " + e.getMessage());
             alert.showAndWait();
         }
     }
