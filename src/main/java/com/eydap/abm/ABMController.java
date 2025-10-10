@@ -95,25 +95,48 @@ public class ABMController {
         runButton.disableProperty().bind(runProcedureTask.runningProperty());
         messageArea.textProperty().bind(runProcedureTask.messageProperty());
 
+        // --- IMPROVED EVENT HANDLING ---
+
+        // This now handles the successful completion of the task
         runProcedureTask.setOnSucceeded(event -> {
+            // Unbind all UI properties
             messageArea.textProperty().unbind();
-            messageArea.setText(runProcedureTask.getValue());
+            runButton.disableProperty().unbind();
+            progressIndicator.visibleProperty().unbind();
+
+            // Set final UI state
+            progressIndicator.setVisible(false);
+            runButton.setDisable(false);
+            messageArea.setText(runProcedureTask.getValue()); // Display the result from call()
         });
 
+        // This new handler catches ANY exception from the task and displays it
         runProcedureTask.setOnFailed(event -> {
+            // Unbind all UI properties
             messageArea.textProperty().unbind();
+            runButton.disableProperty().unbind();
+            progressIndicator.visibleProperty().unbind();
+
+            // Set final UI state
+            progressIndicator.setVisible(false);
+            runButton.setDisable(false);
+
+            // Get the exception that caused the failure
+            Throwable exception = runProcedureTask.getException();
+            if (exception != null) {
+                // Log to console for detailed debugging and show the error in the UI
+                exception.printStackTrace();
+                messageArea.setText("An error occurred:\n" + exception.getClass().getName() + "\nMessage: " + exception.getMessage());
+            } else {
+                messageArea.setText("An unknown error occurred during the operation.");
+            }
         });
 
         new Thread(runProcedureTask).start();
     }
 
-    /**
-     * This method is called when the "Refresh Counts" button is clicked.
-     * It was missing, causing the application to crash.
-     */
     @FXML
     private void onRunRefreshClick() {
-        // TODO: Implement the logic for refreshing counts.
         messageArea.setText("Refresh counts functionality is not yet implemented.");
     }
 }

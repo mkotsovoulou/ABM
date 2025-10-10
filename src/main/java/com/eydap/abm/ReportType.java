@@ -6,6 +6,9 @@ package com.eydap.abm;
  * and the specific stored procedure to be called.
  */
 public enum ReportType {
+
+    SHOW_COUNTS("Display Last Month Loaded", "ABM_Show_Counts"),
+
     /**
      * Report for checking data
      */

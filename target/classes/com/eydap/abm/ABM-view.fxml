@@ -24,7 +24,8 @@
         <Label text="Month:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
         <TextField fx:id="monthField" maxWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-        <Button onAction="#onRunProcedureClick" text="Run Procedure" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+        <!-- The fx:id="runButton" has been added to this button -->
+        <Button fx:id="runButton" onAction="#onRunProcedureClick" text="Run Procedure" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
         <rowConstraints>
             <RowConstraints />
             <RowConstraints />
