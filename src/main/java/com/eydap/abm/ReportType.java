@@ -15,8 +15,19 @@ public enum ReportType {
     CHECK_DATA("Data Check", "ABM_SP_Output_Validation"),
 
     /**
-     * Report for Master Data
+     * P1
      */
+    ABM_SP_EXEC_P1("ABM_SP_Exec_P1", "ABM_SP_Exec_P1"),
+
+    /**
+     * P2
+     */
+    ABM_SP_EXEC_P2("ABM_SP_Exec_P2", "ABM_SP_Exec_P2"),
+
+    /**
+     * P3
+     */
+    ABM_SP_EXEC_P3("ABM_SP_Exec_P3", "ABM_SP_Exec_P3"),
 
     MASTER_DATA("Master Data Refresh", "ABM_Update_Master_Data"),
     /**
