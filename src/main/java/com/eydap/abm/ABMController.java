@@ -39,6 +39,18 @@ public class ABMController {
     @FXML
     public void initialize() {
         reportTypeCombo.getItems().setAll(ReportType.values());
+        reportTypeCombo.valueProperty().addListener((obs, oldValue, newValue) -> updateSelectedReportMessage(newValue));
+    }
+
+    private void updateSelectedReportMessage(ReportType selectedReport) {
+        if (selectedReport == null) {
+            return;
+        }
+
+        messageArea.setText(
+                "Selected report: " + selectedReport.getDisplayName() + "\n" +
+                "Procedure: " + selectedReport.getProcedure()
+        );
     }
 
     @FXML

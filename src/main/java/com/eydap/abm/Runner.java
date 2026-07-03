@@ -16,13 +16,19 @@ import java.util.Optional;
 
 public class Runner {
     public static void main(String[] args) throws IOException {
-        String version = ABMApplication.class.getPackage().getImplementationVersion();
+        String version = resolveVersion();
         System.out.println("ABM Running version: " + version);
 
         // Your update logic can remain here...
 
         // The critical change is this line:
         ABMApplication.main(args);
+    }
+
+    private static String resolveVersion() {
+        String version = Runner.class.getPackage().getImplementationVersion();
+        // When I run it from IDE it says DEV
+        return version == null ? "DEV" : version;
     }
 
     // ... all your other helper methods (getLatestVersion, downloadNewJar, etc.) remain the same
